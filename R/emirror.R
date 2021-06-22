@@ -5,8 +5,8 @@
 #' Suggested: RColorBrewer, ggrepel
 #' @param top data frame, columns one and two must be Variable, pvalue, and Group; Shape and Color optional
 #' @param bottom data frame, columns one and two must be Variable, pvalue, and Group; Shape and Color optional
-#' @param tline optional pvalue threshold to draw red line at in top plot
-#' @param bline optional pvalue threshold to draw red line at in bottom plot
+#' @param tline list of pvalues to draw red threshold lines in top plot
+#' @param bline list of pvalues to draw red threshold lines in bottom plot
 #' @param log10 plot -log10() of pvalue column, boolean
 #' @param yaxis label for y-axis in the format c("top", "bottom"), automatically set if log10=TRUE
 #' @param opacity opacity of points, from 0 to 1, useful for dense plots
@@ -41,7 +41,12 @@
 #' highlight_p=c(0.0001, 0.0005), highlighter="green", toptitle = "EWAS Comparison Example: Data 1", 
 #' bottomtitle = "EWAS Comparison Example: Data 2")
 
-emirror <- function(top, bottom,  tline, bline, log10=TRUE, yaxis, opacity=1, toptitle=NULL, bottomtitle=NULL, annotate_var, annotate_p, highlight_var, highlight_p, highlighter="red", color1="#AAAAAA", color2="#4D4D4D", groupcolors, rotatelabels=FALSE, labelangle, freey=FALSE, background="variegated", grpblocks=FALSE, file="emirror", hgtratio=0.5, hgt=7, wi=12, res=300){
+emirror <- function(top, bottom, tline, bline, log10=TRUE, yaxis, opacity=1, 
+                    toptitle=NULL, bottomtitle=NULL, annotate_var, annotate_p,
+                    highlight_var, highlight_p, highlighter="red", color1="#AAAAAA", 
+                    color2="#4D4D4D", groupcolors, rotatelabels=FALSE, labelangle, 
+                    freey=FALSE, background="variegated", grpblocks=FALSE, 
+                    file="emirror", hgtratio=0.5, hgt=7, wi=12, res=300){
 
   topn <- names(top)
   bottomn <- names(bottom)
@@ -251,10 +256,14 @@ emirror <- function(top, bottom,  tline, bline, log10=TRUE, yaxis, opacity=1, to
   }
   #Add pvalue threshold line
   if(!missing(tline)){
-    p1 <- p1 + geom_hline(yintercept = tredline, colour="red")
+    for(i in 1:length(tline)){
+      p1 <- p1 + geom_hline(yintercept = tredline[i], colour="red")
+    }
   }
   if(!missing(bline)){
-    p2 <- p2 + geom_hline(yintercept = bredline, colour="red")
+    for(i in 1:length(bline)){
+      p2 <- p2 + geom_hline(yintercept = bredline[i], colour="red")
+    }
   }
   #Annotate
   if(!missing(annotate_p)){
