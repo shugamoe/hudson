@@ -24,7 +24,9 @@
 #' @param background variegated or white
 #' @param chrblocks logical, turns on x-axis chromosome marker blocks
 #' @param breaks1 vector of breaks for plot1 (top)
-#' @param breaks2 vector of breaks for plot2 (top)
+#' @param breaks2 vector of breaks for plot2 (bottom)
+#' @param cust_ymax1 custom ymax for plot1 (top)
+#' @param cust_ymax2 custom ymax for plot2 (bottom)
 #' @param file file name of saved image
 #' @param type plot type/extension
 #' @param hgt height of plot in inches
@@ -102,8 +104,18 @@ gmirror <- function(top, bottom, tline, bline, chroms = c(1:22, "X", "Y"),log10=
     if(!missing(tline)) {tredline <- tline}
     if(!missing(bline)) {bredline <- bline}
   }
-  yaxismax1 <- ifelse(freey==FALSE, max(d_order$pval[which(d_order$pval< Inf)]), max(d_order$pval[which(d_order$pval< Inf) & d_order$Location=="Top"]))
-  yaxismax2 <- ifelse(freey==FALSE, max(d_order$pval[which(d_order$pval< Inf)]), max(d_order$pval[which(d_order$pval< Inf) & d_order$Location=="Bottom"]))
+  
+  if (!is.null(cust_ymax1)){
+    yaxismax1 <- cust_ymax1
+  } else {
+    yaxismax1 <- ifelse(freey==FALSE, max(d_order$pval[which(d_order$pval< Inf)]), max(d_order$pval[which(d_order$pval< Inf) & d_order$Location=="Top"]))
+  }
+
+  if (!is.null(cust_ymax2)){
+    yaxismax2 <- cust_ymax2
+  } else {
+    yaxismax2 <- ifelse(freey==FALSE, max(d_order$pval[which(d_order$pval< Inf)]), max(d_order$pval[which(d_order$pval< Inf) & d_order$Location=="Bottom"]))
+  }
   yaxismin1 <- ifelse(freey==FALSE, 0, min(d_order$pval[d_order$Location=="Top"]))
   yaxismin2 <- ifelse(freey==FALSE, 0, min(d_order$pval[d_order$Location=="Bottom"]))
   
