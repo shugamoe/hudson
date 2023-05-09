@@ -213,11 +213,13 @@ gmirror <- function(top, bottom, tline, bline, chroms = c(1:22, "X", "Y"),log10=
       print("Sorry, drawing chrblocks with freey=TRUE is currently unsupported and will be ignored.")
     } else {
       if (!is.null(breaks1)){
+	print("Adding custom breaks for graph 1")
         p1 <- p1+theme(axis.text.x = element_text(vjust=1),axis.ticks.x = element_blank())+ylim(c(yaxismin1,yaxismax1)) + scale_y_continuous(limits=c(yaxismin1, yaxismax1), expand=expansion(mult=c(0,0.1)), breaks=breaks1)
       } else {
         p1 <- p1+theme(axis.text.x = element_text(vjust=1),axis.ticks.x = element_blank())+ylim(c(yaxismin1,yaxismax1))
       }
       if (!is.null(breaks2)){
+	print("Adding custom breaks for graph 2")
         p2 <- p2+scale_y_reverse(limits=c(yaxismax2, yaxismin2), breaks=breaks2) + theme(axis.text.x = element_blank(),axis.ticks.x = element_blank())
       } else {
         p2 <- p2+scale_y_reverse(limits=c(yaxismax2, yaxismin2)) + theme(axis.text.x = element_blank(),axis.ticks.x = element_blank())
@@ -225,12 +227,14 @@ gmirror <- function(top, bottom, tline, bline, chroms = c(1:22, "X", "Y"),log10=
     }
   } else {
     if (!is.null(breaks1)){
+      print("Adding custom breaks for graph 1")
       p1 <- p1+theme(axis.text.x = element_text(vjust=1),axis.ticks.x = element_blank())+ scale_y_continuous(limits=c(yaxismin1, yaxismax1),expand=expansion(mult=c(0,0.1)), breaks=breaks1)
     } else {
       p1 <- p1+theme(axis.text.x = element_text(vjust=1),axis.ticks.x = element_blank())+ scale_y_continuous(limits=c(yaxismin1, yaxismax1),expand=expansion(mult=c(0,0.1)))
     }
 
     if (!is.null(breaks2)){
+      print("Adding custom breaks for graph 2")
       p2 <- p2+scale_y_reverse(limits=c(yaxismax2,yaxismin2), expand=expansion(mult=c(0.1,0)), breaks=breaks2) + theme(axis.text.x = element_blank(),axis.ticks.x = element_blank())
     } else {
       p2 <- p2+scale_y_reverse(limits=c(yaxismax2,yaxismin2), expand=expansion(mult=c(0.1,0))) + theme(axis.text.x = element_blank(),axis.ticks.x = element_blank())
