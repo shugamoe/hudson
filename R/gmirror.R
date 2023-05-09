@@ -227,7 +227,7 @@ gmirror <- function(top, bottom, tline, bline, chroms = c(1:22, "X", "Y"),log10=
       p1 <- p1+theme(axis.text.x = element_text(vjust=1),axis.ticks.x = element_blank())+ylim(c(yaxismin1,yaxismax1))
       if (!is.null(breaks2)){
         print("Adding custom breaks for graph 2 (chrblocks==TRUE)")
-        p2 <- p2+scale_y_reverse(limits=c(yaxismax2, yaxismin2)) + theme(axis.text.x = element_blank(),axis.ticks.x = element_blank(), breaks=breaks2)
+        p2 <- p2+scale_y_reverse(limits=c(yaxismax2, yaxismin2), breaks=breaks2) + theme(axis.text.x = element_blank(),axis.ticks.x = element_blank())
       } else {
         p2 <- p2+scale_y_reverse(limits=c(yaxismax2, yaxismin2)) + theme(axis.text.x = element_blank(),axis.ticks.x = element_blank())
       }
