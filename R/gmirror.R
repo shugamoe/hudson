@@ -49,7 +49,7 @@ gmirror <- function(top, bottom, tline, bline, chroms = c(1:22, "X", "Y"),log10=
                     bottomtitle=NULL, highlight_snp, highlight_p, highlighter="red", 
                     chrcolor1="#AAAAAA", chrcolor2="#4D4D4D", freey=FALSE, 
                     background="variegated", chrblocks=FALSE,
-		    breaks1=NULL, breaks2=NULL,
+		    breaks1=NULL, breaks2=NULL, cust_ymax1=NULL, cust_ymax2=NULL,
 		    file="gmirror", 
                     type="png", hgt=7, hgtratio=0.5, wi=12, res=300 ){
   
