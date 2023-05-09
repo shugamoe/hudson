@@ -23,6 +23,8 @@
 #' @param freey allow y-axes to scale with the data
 #' @param background variegated or white
 #' @param chrblocks logical, turns on x-axis chromosome marker blocks
+#' @param breaks1 vector of breaks for plot1 (top)
+#' @param breaks2 vector of breaks for plot2 (top)
 #' @param file file name of saved image
 #' @param type plot type/extension
 #' @param hgt height of plot in inches
@@ -44,7 +46,9 @@ gmirror <- function(top, bottom, tline, bline, chroms = c(1:22, "X", "Y"),log10=
                     yaxis, opacity=1, annotate_snp, annotate_p, toptitle=NULL, 
                     bottomtitle=NULL, highlight_snp, highlight_p, highlighter="red", 
                     chrcolor1="#AAAAAA", chrcolor2="#4D4D4D", freey=FALSE, 
-                    background="variegated", chrblocks=FALSE, file="gmirror", 
+                    background="variegated", chrblocks=FALSE,
+		    breaks1=NULL, breaks2=NULL,
+		    file="gmirror", 
                     type="png", hgt=7, hgtratio=0.5, wi=12, res=300 ){
   
   #Sort data
@@ -208,12 +212,29 @@ gmirror <- function(top, bottom, tline, bline, chroms = c(1:22, "X", "Y"),log10=
     if(freey==TRUE){
       print("Sorry, drawing chrblocks with freey=TRUE is currently unsupported and will be ignored.")
     } else {
-      p1 <- p1+theme(axis.text.x = element_text(vjust=1),axis.ticks.x = element_blank())+ylim(c(yaxismin1,yaxismax1))
-      p2 <- p2+scale_y_reverse(limits=c(yaxismax2, yaxismin2)) + theme(axis.text.x = element_blank(),axis.ticks.x = element_blank())
+      if (!is.null(breaks1){
+        p1 <- p1+theme(axis.text.x = element_text(vjust=1),axis.ticks.x = element_blank())+ylim(c(yaxismin1,yaxismax1)) + scale_y_continuous(limits=c(yaxismin1, yaxismax1), expand=expansion(mult=c(0,0.1)), breaks=breaks1)
+      } else {
+        p1 <- p1+theme(axis.text.x = element_text(vjust=1),axis.ticks.x = element_blank())+ylim(c(yaxismin1,yaxismax1))
+      }
+      if (!is.null(breaks2)){
+        p2 <- p2+scale_y_reverse(limits=c(yaxismax2, yaxismin2), breaks=breaks2) + theme(axis.text.x = element_blank(),axis.ticks.x = element_blank())
+      } else {
+        p2 <- p2+scale_y_reverse(limits=c(yaxismax2, yaxismin2)) + theme(axis.text.x = element_blank(),axis.ticks.x = element_blank())
+      }
     }
   } else {
-    p1 <- p1+theme(axis.text.x = element_text(vjust=1),axis.ticks.x = element_blank())+ scale_y_continuous(limits=c(yaxismin1, yaxismax1),expand=expansion(mult=c(0,0.1)))
-    p2 <- p2+scale_y_reverse(limits=c(yaxismax2,yaxismin2), expand=expansion(mult=c(0.1,0))) + theme(axis.text.x = element_blank(),axis.ticks.x = element_blank())
+    if (!is.null(breaks1)){
+      p1 <- p1+theme(axis.text.x = element_text(vjust=1),axis.ticks.x = element_blank())+ scale_y_continuous(limits=c(yaxismin1, yaxismax1),expand=expansion(mult=c(0,0.1)), breaks=breaks1)
+    } else {
+      p1 <- p1+theme(axis.text.x = element_text(vjust=1),axis.ticks.x = element_blank())+ scale_y_continuous(limits=c(yaxismin1, yaxismax1),expand=expansion(mult=c(0,0.1)))
+    }
+
+    if (!is.null(breaks2)){
+      p2 <- p2+scale_y_reverse(limits=c(yaxismax2,yaxismin2), expand=expansion(mult=c(0.1,0)), breaks=breaks2) + theme(axis.text.x = element_blank(),axis.ticks.x = element_blank())
+    } else {
+      p2 <- p2+scale_y_reverse(limits=c(yaxismax2,yaxismin2), expand=expansion(mult=c(0.1,0))) + theme(axis.text.x = element_blank(),axis.ticks.x = element_blank())
+    }
   }
 
   if(background=="white"){
