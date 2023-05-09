@@ -212,7 +212,7 @@ gmirror <- function(top, bottom, tline, bline, chroms = c(1:22, "X", "Y"),log10=
     if(freey==TRUE){
       print("Sorry, drawing chrblocks with freey=TRUE is currently unsupported and will be ignored.")
     } else {
-      if (!is.null(breaks1){
+      if (!is.null(breaks1)){
         p1 <- p1+theme(axis.text.x = element_text(vjust=1),axis.ticks.x = element_blank())+ylim(c(yaxismin1,yaxismax1)) + scale_y_continuous(limits=c(yaxismin1, yaxismax1), expand=expansion(mult=c(0,0.1)), breaks=breaks1)
       } else {
         p1 <- p1+theme(axis.text.x = element_text(vjust=1),axis.ticks.x = element_blank())+ylim(c(yaxismin1,yaxismax1))
